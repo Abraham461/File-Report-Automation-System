@@ -26,7 +26,7 @@ class CriticalUiFlowTests(unittest.TestCase):
 
     def test_upload_flow_page_loads(self) -> None:
         html = self._fetch_page("/upload")
-        self.assertTrue("upload" in html or "file" in html)
+        self.assertIn("upload", html)
 
     def test_search_flow_page_loads(self) -> None:
         html = self._fetch_page("/search")
@@ -34,7 +34,7 @@ class CriticalUiFlowTests(unittest.TestCase):
 
     def test_generate_report_flow_page_loads(self) -> None:
         html = self._fetch_page("/reports")
-        self.assertTrue("report" in html or "generate" in html)
+        self.assertTrue("reports" in html or "report" in html)
 
 
 if __name__ == "__main__":
