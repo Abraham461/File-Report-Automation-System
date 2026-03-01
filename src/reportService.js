@@ -1,3 +1,4 @@
+// DEPRECATED: Python FastAPI backend in app/ is the default runtime.
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { appendReport, readStore } from './reportStore.js';

@@ -1,3 +1,4 @@
+// DEPRECATED: Python FastAPI backend in app/ is the default runtime.
 import fs from 'node:fs';
 import path from 'node:path';
 
