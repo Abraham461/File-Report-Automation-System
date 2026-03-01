@@ -63,7 +63,7 @@ function buildPayload() {
 previewBtn.addEventListener('click', async () => {
   const payload = buildPayload();
 
-  const response = await fetch('/api/reports/generate', {
+  const response = await fetch('/api/reports', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)

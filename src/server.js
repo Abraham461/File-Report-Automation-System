@@ -57,6 +57,62 @@ function sendFile(res, filePath, downloadName) {
   fs.createReadStream(filePath).pipe(res);
 }
 
+function normalizeBaseUrl(baseUrl) {
+  return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+}
+
+function extractJsonBody(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    throw new Error('Body must be a JSON object');
+  }
+
+  return payload;
+}
+
+function handleUpload(payload) {
+  const body = extractJsonBody(payload);
+  const files = Array.isArray(body.files) ? body.files : [];
+  if (!files.length) {
+    throw new Error('files must contain at least one item');
+  }
+
+  return {
+    accepted: files.length,
+    receivedAt: new Date().toISOString()
+  };
+}
+
+function handleSearch(baseUrl, query) {
+  const q = (query.get('q') || '').trim();
+  if (!q) {
+    throw new Error('q query parameter is required');
+  }
+
+  const qLower = q.toLowerCase();
+  const historyMatches = getReportHistory()
+    .filter((report) => report.title.toLowerCase().includes(qLower) || report.templateId.toLowerCase().includes(qLower))
+    .map((report) => ({
+      type: 'report-history',
+      id: report.reportId,
+      title: report.title,
+      templateId: report.templateId,
+      generatedAt: report.generatedAt,
+      url: `${normalizeBaseUrl(baseUrl)}/api/reports/${report.reportId}`
+    }));
+
+  const templateMatches = reportTemplates
+    .filter((template) => template.title.toLowerCase().includes(qLower) || template.description.toLowerCase().includes(qLower))
+    .map((template) => ({
+      type: 'template',
+      id: template.id,
+      title: template.title,
+      description: template.description,
+      url: `${normalizeBaseUrl(baseUrl)}/api/report-templates#${template.id}`
+    }));
+
+  return { query: q, results: [...historyMatches, ...templateMatches] };
+}
+
 const server = http.createServer(async (req, res) => {
   const requestUrl = new URL(req.url, `http://localhost:${port}`);
   const { pathname } = requestUrl;
@@ -67,6 +123,33 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === '/api/reports/history' && req.method === 'GET') {
     return sendJson(res, 200, { history: getReportHistory() });
+  }
+
+  if (pathname === '/api/upload' && req.method === 'POST') {
+    try {
+      const payload = await readBody(req);
+      return sendJson(res, 201, { upload: handleUpload(payload) });
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (pathname === '/api/search' && req.method === 'GET') {
+    try {
+      return sendJson(res, 200, handleSearch(`http://localhost:${port}`, requestUrl.searchParams));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (pathname === '/api/reports' && req.method === 'POST') {
+    try {
+      const payload = await readBody(req);
+      const report = await generateReport(payload);
+      return sendJson(res, 201, { report });
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
   }
 
   if (pathname === '/api/reports/generate' && req.method === 'POST') {
@@ -91,8 +174,21 @@ const server = http.createServer(async (req, res) => {
     return sendFile(res, path.resolve(exportEntry.path), `${reportId}.${format}`);
   }
 
+  const reportMatch = pathname.match(/^\/api\/reports\/([^/]+)$/);
+  if (reportMatch && req.method === 'GET') {
+    const [, reportId] = reportMatch;
+    const report = getReportById(reportId);
+    if (!report) return sendJson(res, 404, { error: 'Report not found' });
+
+    return sendJson(res, 200, { report });
+  }
+
   if (pathname === '/health') {
     return sendJson(res, 200, { ok: true });
+  }
+
+  if (['/login', '/upload', '/search', '/reports'].includes(pathname) && req.method === 'GET') {
+    return sendFile(res, path.resolve(path.join(publicDir, `${pathname.slice(1)}.html`)));
   }
 
   const safePath = pathname === '/' ? '/index.html' : pathname;
