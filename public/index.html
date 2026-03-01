@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Search</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>File Search</h1>
+
+      <form id="search-form" class="filters">
+        <input id="q" name="q" placeholder="Search filename, title, tags, description" />
+
+        <label>From <input type="date" id="dateFrom" name="dateFrom" /></label>
+        <label>To <input type="date" id="dateTo" name="dateTo" /></label>
+
+        <label>Uploader
+          <select id="uploader" name="uploader">
+            <option value="">Any</option>
+          </select>
+        </label>
+
+        <label>Category
+          <select id="category" name="category">
+            <option value="">Any</option>
+          </select>
+        </label>
+
+        <label>File Type
+          <select id="fileType" name="fileType">
+            <option value="">Any</option>
+          </select>
+        </label>
+
+        <label>Sort
+          <select id="sort" name="sort">
+            <option value="relevance">Relevance</option>
+            <option value="date">Date (newest)</option>
+            <option value="name">Name (A-Z)</option>
+          </select>
+        </label>
+
+        <div class="actions">
+          <button type="submit">Search</button>
+          <button type="button" id="reset">Reset</button>
+        </div>
+      </form>
+
+      <p id="status" class="status"></p>
+      <ul id="results" class="results"></ul>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
