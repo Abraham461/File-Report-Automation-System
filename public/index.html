@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Automation</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Report Generation Flow</h1>
+
+      <section class="card">
+        <h2>1) Select template</h2>
+        <select id="templateSelect"></select>
+      </section>
+
+      <section class="card">
+        <h2>2) Select files/data source</h2>
+        <p>Use JSON arrays. Examples are pre-filled and editable.</p>
+        <label>
+          Metadata JSON
+          <textarea id="metadataInput" rows="4"></textarea>
+        </label>
+        <label>
+          Files JSON (for File Summary template)
+          <textarea id="filesInput" rows="6"></textarea>
+        </label>
+        <label>
+          Activity Events JSON (for Activity/Audit template)
+          <textarea id="eventsInput" rows="6"></textarea>
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>3) Preview generated report</h2>
+        <label>
+          Export formats
+          <div>
+            <label><input type="checkbox" value="pdf" checked /> PDF</label>
+          </div>
+        </label>
+        <button id="previewBtn">Generate Preview</button>
+        <pre id="preview"></pre>
+      </section>
+
+      <section class="card">
+        <h2>4) Export/save</h2>
+        <button id="saveBtn" disabled>Save Report</button>
+        <div id="downloadLinks"></div>
+      </section>
+
+      <section class="card">
+        <h2>Generation History</h2>
+        <button id="refreshHistoryBtn">Refresh History</button>
+        <ul id="historyList"></ul>
+      </section>
+    </main>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
