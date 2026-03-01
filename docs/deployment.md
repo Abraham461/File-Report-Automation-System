@@ -1,13 +1,13 @@
 # FRAS Deployment Guide
 
-This guide covers environment setup, database migration, and production startup steps for the File & Report Automation System (FRAS).
+This guide is aligned to the Python/FastAPI service in this repository (`app/main.py`) and its Alembic migrations.
 
 ## 1) Environment setup
 
 ### Prerequisites
 - Linux server or container runtime (Ubuntu 22.04+ recommended)
-- Python 3.11+ (or your project runtime)
-- PostgreSQL 14+
+- Python 3.11+
+- PostgreSQL 14+ (production) or SQLite (local/dev)
 - Reverse proxy (Nginx/Caddy)
 - Git
 
@@ -25,7 +25,6 @@ APP_HOST=0.0.0.0
 APP_PORT=8000
 APP_SECRET=<replace-with-long-random-secret>
 DATABASE_URL=postgresql://fras_user:<password>@localhost:5432/fras_db
-STORAGE_PATH=/var/lib/fras/uploads
 LOG_LEVEL=INFO
 ```
 
@@ -37,8 +36,6 @@ pip install -U pip
 pip install -r requirements.txt
 ```
 
-> If your implementation uses Node.js, install with `npm ci` and map variables into your runtime config.
-
 ## 2) Database migration
 
 ### Create database and user (PostgreSQL)
@@ -48,14 +45,9 @@ CREATE DATABASE fras_db OWNER fras_user;
 GRANT ALL PRIVILEGES ON DATABASE fras_db TO fras_user;
 ```
 
-### Run migrations
-Use your migration tool. Example commands:
+### Run migrations (Alembic)
 ```bash
-# Alembic example
 alembic upgrade head
-
-# Django example
-python manage.py migrate
 ```
 
 ### Seed baseline data (optional)
@@ -67,7 +59,6 @@ python scripts/seed.py
 
 ### Start application process
 ```bash
-# Gunicorn example
 gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
 ```
 
@@ -117,12 +108,11 @@ sudo systemctl status fras
 ## 4) Post-deployment verification
 
 ```bash
-curl -I http://127.0.0.1:8000/health
-curl -I https://fras.example.com/login
-python -m unittest discover -s tests -p 'test_*.py'
+curl -sSf http://127.0.0.1:8000/health
+curl -sSf http://127.0.0.1:8000/api/report-templates
+curl -sSf http://127.0.0.1:8000/api/reports/history
 ```
 
 ## 5) Backup and recovery
 - Database backup: nightly `pg_dump` to secure storage.
-- Uploaded files backup: snapshot `${STORAGE_PATH}` daily.
 - Keep at least 14 days of restore points.
