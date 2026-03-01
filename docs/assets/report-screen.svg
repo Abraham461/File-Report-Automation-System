@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <text x="60" y="70" font-family="Arial" font-size="30" fill="#111827">Generate Report</text>
+  <rect x="60" y="100" width="840" height="360" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="90" y="145" font-family="Arial" font-size="16" fill="#6b7280">Title</text>
+  <rect x="90" y="160" width="780" height="40" rx="6" fill="#f9fafb" stroke="#d1d5db"/>
+  <text x="90" y="230" font-family="Arial" font-size="16" fill="#6b7280">Summary</text>
+  <rect x="90" y="245" width="780" height="140" rx="6" fill="#f9fafb" stroke="#d1d5db"/>
+  <rect x="710" y="400" width="160" height="42" rx="8" fill="#2563eb"/>
+  <text x="790" y="427" text-anchor="middle" font-family="Arial" font-size="16" fill="#ffffff">Generate</text>
+</svg>

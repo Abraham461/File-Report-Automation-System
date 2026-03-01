@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <text x="60" y="70" font-family="Arial" font-size="30" fill="#111827">Search Files</text>
+  <rect x="60" y="100" width="680" height="44" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="80" y="128" font-family="Arial" font-size="14" fill="#9ca3af">Search by keyword, tag, or owner...</text>
+  <rect x="760" y="100" width="140" height="44" rx="8" fill="#2563eb"/>
+  <text x="830" y="128" text-anchor="middle" font-family="Arial" font-size="16" fill="#ffffff">Search</text>
+  <rect x="60" y="170" width="840" height="300" rx="12" fill="#ffffff" stroke="#d1d5db"/>
+  <text x="90" y="210" font-family="Arial" font-size="16" fill="#374151">student-report.pdf</text>
+  <text x="90" y="250" font-family="Arial" font-size="16" fill="#374151">exam-schedule.docx</text>
+  <text x="90" y="290" font-family="Arial" font-size="16" fill="#374151">budget-sheet.xlsx</text>
+</svg>

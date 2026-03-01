@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <text x="60" y="70" font-family="Arial" font-size="30" fill="#111827">Upload Documents</text>
+  <rect x="60" y="110" width="840" height="280" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="8 6"/>
+  <text x="480" y="250" text-anchor="middle" font-family="Arial" font-size="22" fill="#374151">Drag files here or click to browse</text>
+  <rect x="60" y="420" width="180" height="44" rx="8" fill="#2563eb"/>
+  <text x="150" y="448" text-anchor="middle" font-family="Arial" font-size="16" fill="#ffffff">Upload</text>
+</svg>
