@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#f4f7fb"/>
+  <rect x="320" y="100" width="320" height="340" rx="12" fill="#ffffff" stroke="#d8e0ea"/>
+  <text x="480" y="155" text-anchor="middle" font-family="Arial" font-size="28" fill="#1f2937">FRAS Login</text>
+  <rect x="370" y="200" width="220" height="42" rx="6" fill="#f9fafb" stroke="#cbd5e1"/>
+  <text x="382" y="227" font-family="Arial" font-size="14" fill="#6b7280">Email</text>
+  <rect x="370" y="255" width="220" height="42" rx="6" fill="#f9fafb" stroke="#cbd5e1"/>
+  <text x="382" y="282" font-family="Arial" font-size="14" fill="#6b7280">Password</text>
+  <rect x="370" y="320" width="220" height="42" rx="6" fill="#2563eb"/>
+  <text x="480" y="346" text-anchor="middle" font-family="Arial" font-size="16" fill="#ffffff">Sign in</text>
+</svg>
